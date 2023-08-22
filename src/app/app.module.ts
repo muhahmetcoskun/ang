@@ -4,20 +4,21 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './puantaj/auth/auth.module';
 import { NotFoundComponent } from './error/not-found/not-found.component';
 import { UnauthorizedComponent } from './error/unauthorized/unauthorized.component';
 import { ToastModule } from 'primeng/toast';
+import { ErrorInterceptor, JwtInterceptor } from './helpers';
 
 
 
 
 @NgModule({
     declarations: [
-        AppComponent  , NotFoundComponent,
-        UnauthorizedComponent,  
+        AppComponent, NotFoundComponent,
+        UnauthorizedComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -25,12 +26,15 @@ import { ToastModule } from 'primeng/toast';
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        ToastModule
+        ToastModule,
+        ReactiveFormsModule
         // AuthModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-     
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
     ],
     bootstrap: [AppComponent]
 })

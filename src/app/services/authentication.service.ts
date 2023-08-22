@@ -5,8 +5,8 @@ import {User} from "../models/user.model";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import { Userregister } from '../models/userregister.model';
-import { Userreturn } from '../models/userreturn.model';
-import { Userrefresh } from '../models/userrefresh.model';
+import { Role } from '../models/role.enum';
+
 
 const API_URL = `${environment.BASE_URL}/api/authentication/`
 
@@ -15,8 +15,9 @@ const API_URL = `${environment.BASE_URL}/api/authentication/`
 })
 export class AuthenticationService {
   public currentUser: Observable<User>;
-  private currentUserSubject: BehaviorSubject<Userreturn>;
-  private currentUserReturn: Observable<Userreturn>;
+  private currentUserSubject: BehaviorSubject<User>;
+  private currentUserReturn: Observable<User>;
+
   constructor(private http: HttpClient) {
     let storageUser;
     const storageUserAsStr = localStorage.getItem('currentUser');
@@ -24,12 +25,12 @@ export class AuthenticationService {
       storageUser = JSON.parse(storageUserAsStr);
     }
 
-    this.currentUserSubject = new BehaviorSubject<Userreturn>(storageUser);
-    this.currentUserReturn = this.currentUserSubject.asObservable();
+    this.currentUserSubject = new BehaviorSubject<User>(storageUser);
+    this.currentUser = this.currentUserSubject.asObservable();
 
   }
 
-  public get currentUserValue(): Userreturn {
+  public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
 
@@ -51,11 +52,11 @@ export class AuthenticationService {
 
   logOut() {
     localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(new Userreturn);
+    this.currentUserSubject.next(new User);
     localStorage.clear();     
     window.location.reload();
   }
-  public get userValue(): Userreturn {
+  public get userValue(): User {
     return this.currentUserSubject.value;
   }
   refreshToken() {
@@ -67,11 +68,12 @@ export class AuthenticationService {
 
     return this.http.post<any>(url, body)
       .pipe(map((token) => {
-        const user: Userrefresh = {
-          //username: this.userValue.username,
-         // password: this.userValue.password,
-          accesstoken: token.accesstoken,
-          refreshtoken: this.userValue.refreshtoken
+        const user: User = {
+          username: this.userValue.username,
+          password: "",email:"",firstname:"",lastname:"",
+          phonenumber:"",role:Role.ADMIN,
+          accessToken: token.accessToken,
+          refreshToken: this.userValue.refreshToken
         }
         //this.currentUserSubject.next(user);
         localStorage.setItem('currentUser', JSON.stringify(user));

@@ -6,14 +6,7 @@ import { LoginComponent } from './puantaj/auth/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NotFoundComponent } from './error/not-found/not-found.component';
 import { UnauthorizedComponent } from './error/unauthorized/unauthorized.component';
-const routes: Routes = [
-    {path:'tanimlamalar', loadChildren: () =>
-    import('./puantaj/tanimlamalar/tanimlamalar.module').then(m =>m.TanimlamalarModule)
-    },
-    //{path:'notfound',component:NotFoundComponent},
-   { path: '', component: AppLayoutComponent}
-  ];
-  
+
 @NgModule({
     imports: [
         RouterModule.forRoot([
@@ -21,7 +14,15 @@ const routes: Routes = [
                 path: '', component: AppLayoutComponent,  canActivate: [AuthGuard],
                 children: [
                    
-                    { path: 'tanimlamalar', loadChildren: () => import('./puantaj/tanimlamalar/tanimlamalar.module').then(m => m.TanimlamalarModule),  canActivate: [AuthGuard], },
+                    { path: '', loadChildren: () => import('./puantaj/tanimlamalar/tanimlamalar.module').then(m => m.TanimlamalarModule),  canActivate: [AuthGuard], },
+                  
+                ]
+            },
+            {
+                path: 'tanimlamalar', component: AppLayoutComponent,  canActivate: [AuthGuard],
+                children: [
+                   
+                    { path: '', loadChildren: () => import('./puantaj/tanimlamalar/tanimlamalar.module').then(m => m.TanimlamalarModule),  canActivate: [AuthGuard], },
                   
                 ]
             },

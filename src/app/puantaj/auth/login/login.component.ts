@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
@@ -20,6 +20,8 @@ import { Table } from 'primeng/table';
 })
 export class LoginComponent {
 
+
+  
     valCheck: string[] = ['remember'];
 
     password!: string;
@@ -32,6 +34,8 @@ export class LoginComponent {
           this.router.navigate(['']);
           return;
         }
+
+        
       }
       login() {
         this.authenticationService.login(this.user).subscribe(data => {

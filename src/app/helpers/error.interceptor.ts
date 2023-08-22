@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
-
-import { AuthenticationService } from '../_services';
-import { User } from '../_models';
+import { AuthenticationService } from '../services/authentication.service';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -46,11 +45,11 @@ export class ErrorInterceptor implements HttpInterceptor {
             return this._auth.refreshToken().pipe(
                 switchMap((user: User) => {
                     this.isRefreshing = false;
-                    this.refreshTokenSubject.next(user.access_token);
+                    this.refreshTokenSubject.next(user.refreshToken);
                     return next.handle(
                         request.clone({
                             setHeaders: {
-                                'Authorization': `Bearer ${user.access_token}`
+                                'Authorization': `Bearer ${user.accessToken}`
                             }
                         })
                     );

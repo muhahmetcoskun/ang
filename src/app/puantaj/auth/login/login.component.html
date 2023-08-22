@@ -17,7 +17,7 @@
                     <input id="username"type="number" placeholder="Kullanıcı Adı" pInputText step="0.01"
                         class="w-full md:w-30rem mb-5 numberRemoveIcc" style="padding:1rem" min="1" max="99999999999"  name="username"
                         [(ngModel)]="user.username"
-                        #username="ngModel">
+                        #username="ngModel" >
 
                     <label for="password" class="block text-900 font-medium text-xl mb-2">Şifre</label>
                     <p-password id="password" placeholder="Şifre" [toggleMask]="true" styleClass="mb-5"
