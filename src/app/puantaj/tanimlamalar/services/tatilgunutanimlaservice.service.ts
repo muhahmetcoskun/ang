@@ -11,10 +11,9 @@ export class TatilgunutanimlaserviceService {
   constructor(private httpService: HttpService) { }
 
   async tatilGunleriListesiGetir(codes: string[], callback: () => void) {
-    console.log(codes)
+    //console.log(codes)
     const observable: Observable<any> = this.httpService.get("", "ResmiTatils",1);
     const datas = await firstValueFrom<[]>(observable);
-    debugger;
   
     return datas;
   }
