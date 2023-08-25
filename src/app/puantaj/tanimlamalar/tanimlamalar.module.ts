@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TanimlamalarRoutingModule } from './tanimlamalar-routing.module';
@@ -21,8 +21,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
+import { PrimTurleriTanimlaComponent } from './prim-turleri-tanimla/prim-turleri-tanimla.component';
 @NgModule({
-  declarations: [TatilGunuTanimlaHomeComponent
+  declarations: [TatilGunuTanimlaHomeComponent, PrimTurleriTanimlaComponent
   ],
   imports: [
     HttpClientModule,
@@ -47,6 +48,9 @@ import { DialogModule } from 'primeng/dialog';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
     // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   exports: []
 })

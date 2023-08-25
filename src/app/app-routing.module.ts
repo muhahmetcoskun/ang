@@ -6,6 +6,7 @@ import { LoginComponent } from './puantaj/auth/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NotFoundComponent } from './error/not-found/not-found.component';
 import { UnauthorizedComponent } from './error/unauthorized/unauthorized.component';
+import { HomeComponent } from './puantaj/home/home.component';
 
 @NgModule({
     imports: [
@@ -14,29 +15,27 @@ import { UnauthorizedComponent } from './error/unauthorized/unauthorized.compone
                 path: '', component: AppLayoutComponent,  canActivate: [AuthGuard],
                 children: [
                    
-                    { path: '', loadChildren: () => import('./puantaj/tanimlamalar/tanimlamalar.module').then(m => m.TanimlamalarModule),  canActivate: [AuthGuard], },
+                    {   path: '', component: HomeComponent,  canActivate: [AuthGuard]},
                   
                 ]
             },
             {
-                path: 'tanimlamalar', component: AppLayoutComponent,  canActivate: [AuthGuard],
+                path: '', component: AppLayoutComponent,  canActivate: [AuthGuard],
                 children: [
                    
-                    { path: '', loadChildren: () => import('./puantaj/tanimlamalar/tanimlamalar.module').then(m => m.TanimlamalarModule),  canActivate: [AuthGuard], },
+                    { path: 'tanimlamalar', loadChildren: () => import('./puantaj/tanimlamalar/tanimlamalar.module').then(m => m.TanimlamalarModule),  canActivate: [AuthGuard], },
                   
                 ]
             },
             {
                 path: 'auth',
                 children: [
-                   
                     { path: '', loadChildren: () => import('./puantaj/auth/auth.module').then(m => m.AuthModule), },
-                   
                 ]
             },
             {path: '404', component: NotFoundComponent},
             {path: '401', component: UnauthorizedComponent},
-            { path: '**', redirectTo: '/notfound' },
+            {path: '**', component: NotFoundComponent},
            
             
 

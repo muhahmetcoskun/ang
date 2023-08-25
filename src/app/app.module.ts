@@ -11,6 +11,7 @@ import { NotFoundComponent } from './error/not-found/not-found.component';
 import { UnauthorizedComponent } from './error/unauthorized/unauthorized.component';
 import { ToastModule } from 'primeng/toast';
 import { ErrorInterceptor, JwtInterceptor } from './helpers';
+import { HomeComponent } from './puantaj/home/home.component';
 
 
 
@@ -19,6 +20,7 @@ import { ErrorInterceptor, JwtInterceptor } from './helpers';
     declarations: [
         AppComponent, NotFoundComponent,
         UnauthorizedComponent,
+        HomeComponent,
     ],
     imports: [
         AppRoutingModule,
